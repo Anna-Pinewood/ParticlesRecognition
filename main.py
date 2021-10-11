@@ -114,13 +114,14 @@ if __name__ == "__main__":
 
         if os.path.exists(f"info_mean_{particle}.csv"):
             existed_df = pd.read_csv(f"info_mean_{particle}.csv")
+            existed_df = existed_df.drop(columns=existed_df.columns[0])
             info_mean = (
-                pd.concat([existed_df, info_mean])
+                pd.concat([existed_df, info_mean], ignore_index=True)
                 .drop_duplicates()
                 .reset_index(drop=True)
             )
 
-        info_mean.to_csv(f"info_mean_{particle}.csv")
+        info_mean.to_csv(f"info_mean_{particle}.csv")  # ,  index=False)
 
         i += 1
     plt.show()
